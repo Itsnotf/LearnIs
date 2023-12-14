@@ -2,26 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.linear-grammer {
+  @apply bg-gradient-to-r from-green-500 to-lime-500;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.linear-listening {
+  @apply bg-gradient-to-r from-cyan-500 to-blue-500;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.active {
+  @apply bg-green-800;
+}
+
+.Card {
+  @apply mx-auto flex min-h-screen flex-col items-center justify-center sm:w-full md:w-[80%] md:flex-row lg:w-[60%] xl:w-[40%];
 }
