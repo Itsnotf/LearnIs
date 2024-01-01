@@ -4,10 +4,10 @@ import React from 'react'
 
 export default function CardGrammer({ card }) {
     return (
-        <div index={card.id} className=' w-full h-[7rem] border'>
-            <div className='flex flex-col w-[90%] min-h-full border mx-auto items-start'>
-                <h1 className='text-[2rem] font-semibold'>{card.tittle}</h1>
-                <p className='font-light'>{card.describe}</p>
+        <div index={card.id} className=' w-full h-[10rem] rounded-md  '>
+            <div className='flex flex-col w-full justify-center min-h-full  mx-auto items-center'>
+                <h1 className='text-[2rem] font-semibold '>{card.tittle}</h1>
+                <p className='font-light text-center '>{card.describe}</p>
             </div>
         </div>
     )

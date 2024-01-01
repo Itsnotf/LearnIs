@@ -11,7 +11,7 @@
 }
 
 .active {
-  @apply bg-green-800;
+  @apply bg-lime-400;
 }
 
 .Card {

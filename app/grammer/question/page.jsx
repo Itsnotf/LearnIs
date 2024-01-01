@@ -9,7 +9,7 @@ export default function Question() {
 
     const router = useRouter();
     return (
-        <div className=' overflow-hidden w-full min-h-screen'>
+        <div className=' overflow-hidden w-full min-h-screen linear-grammer backdrop-blur-md'>
             <InputQuestion router={router} />
         </div>
     )

@@ -4,7 +4,7 @@ import Bintang from '../public/Bintang.svg'
 
 export default function Home() {
   return (
-    <main className='overflow-hidden w-full md:min-h-screen lg:h-[500px] h-[700px]'>
+    <main className='overflow-hidden w-full md:min-h-screen lg:h-[500px] h-[812px]'>
       <div className='hidden lg:block fixed  md:top-[10%] pt-4 top-[2%] md:left-[40%] left-[30%] text-center text-white '>
         <div className='w-full h-full '>
           <Image src={Bintang} alt="" style={{

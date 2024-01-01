@@ -6,6 +6,7 @@ import RadioButton from "./RadioButton";
 import PlayQuestion from "./PlayQuestion";
 import ButtonJawab from "./ButtonJawaban";
 import ButtonLetsDo from "./ButtonLetsDo";
+import HeroGrammer from "./HeroGrammer";
 
 export {
   Hero,
@@ -16,4 +17,5 @@ export {
   PlayQuestion,
   ButtonJawab,
   ButtonLetsDo,
+  HeroGrammer,
 };

@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import ButtonJawaban from './ButtonJawaban';
-import { playsoal } from '../constant/index';
+import { easySoal, mediumSoal, hardSoal, nightmareSoal } from '../constant/index';
 import { useRouter } from 'next/navigation';
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const PlayQuestion = () => {
     const router = useRouter();
@@ -23,15 +24,34 @@ const PlayQuestion = () => {
     const [isLastQuestion, setIsLastQuestion] = useState(false);
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
+    const [incorrectCount, setIncorrectCount] = useState(0);
+    const [correctCount, setCorrectCount] = useState(0);
+    const [soal, setSoal] = useState();
 
     const Nsoal = searchParams.get('Nsoal');
     const results = JSON.parse(Nsoal);
 
+    const Katagori = searchParams.get('Katagori')
+    const tingkatan = JSON.parse(Katagori)
 
+    const getCategoryData = (category) => {
+        switch (category) {
+            case 1:
+                return { data: easySoal, nama: "Easy Mode" };
+            case 2:
+                return { data: mediumSoal, nama: "Medium Mode" };
+            case 3:
+                return { data: hardSoal, nama: "Hard Mode" };
+            case 4:
+                return { data: nightmareSoal, nama: "nightMare Mode" };
+            default:
+                return [];
+        }
+    };
 
     const getRandomNumbers = (numberOfRandomIds) => {
         const randomNumbers = [];
-        const totalData = playsoal.length;
+        const totalData = 30;
 
         numberOfRandomIds = Math.min(numberOfRandomIds, totalData);
 
@@ -57,10 +77,11 @@ const PlayQuestion = () => {
 
         // Inisialisasi pertanyaan pertama kali
         const initialQuestions = newRandomNumbers.map((randomNumber) =>
-            playsoal.find((soal) => soal.id === randomNumber)
+            getCategoryData(tingkatan.Katagori.tingkat).data.find((soal) => soal.id === randomNumber),
         );
         setQuestions(initialQuestions);
     }, [results.Nsoal.banyaksoal]);
+
 
     const handleAnswerClick = (answer) => {
         if (!isAnswerSubmitted) {
@@ -74,8 +95,6 @@ const PlayQuestion = () => {
         }
     };
 
-    console.log(randomNumbers)
-
     const handleAnswerSubmit = () => {
         if (!isAnswerSubmitted && selectedAnswer !== '') {
             console.log("Jawaban yang dipilih:", selectedAnswer);
@@ -88,6 +107,12 @@ const PlayQuestion = () => {
             setCorrectAnswer(currentQuestion.correct_answer);
             setIsAnswerSubmitted(true);
 
+            // Perbarui statistik jawaban benar atau salah
+            if (correct) {
+                setCorrectCount((count) => count + 1);
+            } else {
+                setIncorrectCount((count) => count + 1);
+            }
             if (currentQuestionIndex < randomNumbers.length - 1) {
                 setIsLastQuestion(false);
             } else {
@@ -109,59 +134,73 @@ const PlayQuestion = () => {
     };
 
     return (
-        <div className='Card'>
-            <div key={getCurrentQuestion().id} className='flex flex-col w-[90%] text-center'>
-                <h1 className='font-light text-[2rem]'>Play Question</h1>
-                <p className='mt-[5rem] text-xl font-semibold'>{getCurrentQuestion().soal}</p>
-                <div className='flex flex-col w-full mt-[5rem]'>
-                    {isAnswerSubmitted && (
-                        <div className={isAnswerCorrect ? 'text-green-500' : 'text-red-500'}>
-                            {isAnswerCorrect ? 'Jawaban Anda Benar!' : 'Jawaban Anda Salah!'}
-                            <br />
-                            Jawaban yang Benar: {correctAnswer}
-                            <br />
-                            Alasan: {getCurrentQuestion().reason}
-                        </div>
-                    )}
-                    {!isAnswerSubmitted && (
-                        <>
-                            <ButtonJawaban
-                                id='a'
-                                actives={activeAnswers.a}
-                                jawaban={getCurrentQuestion().a}
-                                handleClick={() => handleAnswerClick('a')}
-                            />
-                            <ButtonJawaban
-                                id='b'
-                                actives={activeAnswers.b}
-                                jawaban={getCurrentQuestion().b}
-                                handleClick={() => handleAnswerClick('b')}
-                            />
-                            <ButtonJawaban
-                                id='c'
-                                actives={activeAnswers.c}
-                                jawaban={getCurrentQuestion().c}
-                                handleClick={() => handleAnswerClick('c')}
-                            />
-                            <ButtonJawaban
-                                id='d'
-                                actives={activeAnswers.d}
-                                jawaban={getCurrentQuestion().d}
-                                handleClick={() => handleAnswerClick('d')}
-                            />
-                            <button className='p-[1rem] mt-[2rem] border' onClick={handleAnswerSubmit}>
-                                Jawab
+        <div className='relative w-full min-h-screen linear-grammer text-white'>
+            <div className='Card'>
+                {isLastQuestion ?
+                    <div className='flex flex-col '>
+                        <p>Jumlah Benar : {correctCount}</p>
+                        <p>Jumlah Salah : {incorrectCount}</p>
+                        {isAnswerSubmitted && (
+                            <button className='p-[1rem] mt-[2rem]  rounded-md h-[4rem]  hover:border-0 hover:transition-all hover:duration-500 hover:ease-in-out transition-all ease-out duration-500 hover:shadow-lg hover:shadow-lime-200  bg-lime-400' onClick={handleNextButtonClick}>
+                                {isLastQuestion ? 'Selesai' : 'Berikutnya'}
                             </button>
-                        </>
-                    )}
-                    {isAnswerSubmitted && (
-                        <button className='p-[1rem] mt-[2rem] border' onClick={handleNextButtonClick}>
-                            {isLastQuestion ? 'Selesai' : 'Berikutnya'}
-                        </button>
-                    )}
-                </div>
+                        )}
+                    </div>
+                    :
+                    <div key={getCurrentQuestion().id} className='flex flex-col  w-[90%] text-center'>
+                        <h1 className='font-normal text-[2rem] '>Play Question</h1>
+                        <p className='font-extralight'>{getCategoryData(tingkatan.Katagori.tingkat).nama}</p>
+                        <p className='mt-[3rem] text-xl font-medium'>{getCurrentQuestion().soal}</p>
+                        <div className='flex flex-col w-full mt-[2rem]'>
+                            {isAnswerSubmitted && (
+                                <div className={isAnswerCorrect ? 'bg-lime-300/10 shadow-lg rounded-lg py-10 flex flex-col text-start gap-5 px-10 text-lime-300' : 'bg-lime-300/10 shadow-lg rounded-lg py-10 flex flex-col text-start gap-5 px-10 text-red-600'}>
+                                    {isAnswerCorrect ? <p className='font-semibold text-[30px] '>Jawaban Anda Benar!</p> : <div><p className='font-semibold text-[30px] '>Jawaban Anda Salah!</p>  <p className='text-lime-200'> Jawaban yang Benar : {correctAnswer}</p></div>}
+                                    <div className='flex flex-col text-white font-light text-start'>
+                                        <p>Alasan : {getCurrentQuestion().reason}</p>
+                                    </div>
+                                </div>
+                            )}
+                            {!isAnswerSubmitted && (
+                                <div className='flex flex-col gap-[4px]'>
+                                    <ButtonJawaban
+                                        id='a'
+                                        actives={activeAnswers.a}
+                                        jawaban={getCurrentQuestion().a}
+                                        handleClick={() => handleAnswerClick('a')}
+                                    />
+                                    <ButtonJawaban
+                                        id='b'
+                                        actives={activeAnswers.b}
+                                        jawaban={getCurrentQuestion().b}
+                                        handleClick={() => handleAnswerClick('b')}
+                                    />
+                                    <ButtonJawaban
+                                        id='c'
+                                        actives={activeAnswers.c}
+                                        jawaban={getCurrentQuestion().c}
+                                        handleClick={() => handleAnswerClick('c')}
+                                    />
+                                    <ButtonJawaban
+                                        id='d'
+                                        actives={activeAnswers.d}
+                                        jawaban={getCurrentQuestion().d}
+                                        handleClick={() => handleAnswerClick('d')}
+                                    />
+                                    <button className='flex mt-5  items-center justify-center w-full rounded-md h-[4rem]  hover:border-0 hover:transition-all hover:duration-500 hover:ease-in-out transition-all ease-out duration-500 hover:shadow-lg hover:shadow-lime-200  bg-lime-400' onClick={handleAnswerSubmit}>
+                                        <h1 className='text-white text-[1rem] md:text-[1.5rem] font-medium'>Answer</h1>
+                                    </button>
+                                </div>
+                            )}
+
+                        </div>
+                        {isAnswerSubmitted && (
+                            <button className='p-[1rem] mt-[2rem]  rounded-md h-[4rem]  hover:border-0 hover:transition-all hover:duration-500 hover:ease-in-out transition-all ease-out duration-500 hover:shadow-lg hover:shadow-lime-200  bg-lime-400' onClick={handleNextButtonClick}>
+                                {isLastQuestion ? 'Selesai' : 'Berikutnya'}
+                            </button>
+                        )}
+                    </div>}
             </div>
-        </div>
+        </div >
     );
 };
 
