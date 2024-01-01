@@ -34,11 +34,11 @@ function HeroGrammer() {
                             <p className='font-light md:text-base text-xs text-[#819A7B]'>Akan ada tingkatan tingkatan kesulitan berdasarkan materi yang sudah kami sortir, mereka menunggu untuk di selesai kan.</p>
                         </div>
                         <div className='md:w-55%] w-[35%]'>
-                            <Image src={BookLovers} className='object-cover' />
+                            <Image src={BookLovers} alt="" className='object-cover' />
                         </div>
                     </div>
                     <div className='w-full gap-10 flex flex-row h-[250px]  shadow-[7px_0px_5px_0px_rgba(0,0,0,0.1)] items-center justify-center bg-[#EAFBF1] rounded-[20px]'>
-                        <Image src={tasklist} />
+                        <Image src={tasklist} alt="" />
                         <div className='w-[40%] flex flex-col gap-2'>
                             <h1 className='font-semibold text-xl text-[#4ABA47]'>Kerja kan dengan terliti agar hasil memuaskan!!</h1>
                             <p className='font-light text-[#819A7B]'>Kerjakan lah dengan teliti, akan ada beberapa soal jebakan yang mampu mengecoh mu, hati hati dalam menjawab ya goodluck!.</p>
@@ -51,7 +51,7 @@ function HeroGrammer() {
                         <h1 className='font-semibold text-xl text-[#4ABA47]'>Dan lihat tingkat grammar yang anda miliki!!</h1>
                         <p className='font-light text-[#819A7B]'>Anda akan mengetahui seberapa jauh kemampuan anda, anda berhak untuk Puas atau tetap lah terus berlatih</p>
                     </div>
-                    <Image src={QnA} />
+                    <Image src={QnA} alt="" />
                 </div>
             </div>
             <div className='text-center bg-[#4ABA47] p-2 rounded-full animate-bounce cursor-pointer' onClick={handleDown}>

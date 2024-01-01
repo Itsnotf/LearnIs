@@ -50,8 +50,8 @@ const InputQuestion = () => {
                 <div className='  animate-pulse rounded-full w-20 h-20 bg-[#90E20C] absolute left-[50%] top-[56%]'></div>
                 <div className='  animate-pulse rounded-full w-20 h-20 bg-[#90E20C] absolute left-[37%] top-[60%]'></div>
                 <div className='  animate-pulse rounded-full w-28 h-28 bg-[#90E20C] absolute left-[60%] top-[40%]'></div>
-                <div className=' absolute w-full h-full '><Image src={DaunKiriGrammer} className='bottom-0 absolute' /></div>
-                <div className=' absolute min-h-screen w-full'><Image src={DaunKiriGrammer} className='absolute right-0 -rotate-180 ' /></div>
+                <div className=' absolute w-full h-full '><Image src={DaunKiriGrammer} alt="" className='bottom-0 absolute' /></div>
+                <div className=' absolute min-h-screen w-full'><Image src={DaunKiriGrammer} alt="" className='absolute right-0 -rotate-180 ' /></div>
 
                 <div className='w-full flex items-center justify-center flex-col h-auto z-50 bg-white/25 gap-5 py-20 rounded-2xl backdrop-blur-lg backdrop-filter shadow-xl text-white '>
                     <div className='h-[10%]  w-[10%] absolute -top-[40%] -left-[70%]  text-[2rem] text-white rounded-lg '>
@@ -90,7 +90,7 @@ const InputQuestion = () => {
                                     query: { Nsoal: JSON.stringify({ Nsoal }), Katagori: JSON.stringify({ Katagori }) }
                                 }}>
                                 <div className='w-full h-full flex items-center justify-center '>
-                                    {Loadings ? <div className='w-full h-full flex items-center justify-center flex-row gap-5'><Image src={Load} className='animate-spin w-[5%] h-[5%] ' /><p>Loading</p> </div> : <p>Start</p>}
+                                    {Loadings ? <div className='w-full h-full flex items-center justify-center flex-row gap-5'><Image src={Load} alt="" className='animate-spin w-[5%] h-[5%] ' /><p>Loading</p> </div> : <p>Start</p>}
                                 </div>
                             </Link>
                         </div>
